@@ -21,46 +21,7 @@ import org.json.simple.parser.JSONParser;
 
 public class Main {
     public static void main(String[] args) {
-    	System.out.println("dfg");
-    	
-    	/*String fromFile = "http://api.gios.gov.pl/pjp-api/rest/data/getData/92";
-        String toFile = "D:\\file.json";
-
-        try {
-
-            URL website = new URL(fromFile);
-            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream(toFile);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            fos.close();
-            rbc.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        
-    	JSONParser parser = new JSONParser();
-    	//JSONArray a = (JSONArray) parser.parse(new FileReader("http://api.gios.gov.pl/pjp-api/rest/data/getData/92"));
-    /*	try {
-	    	File file = new File("D:\\file.json");
-	        String content = FileUtils.readFileToString(file, "utf-8");
-	        
-	        // Convert JSON string to JSONObject
-	        JSONObject o = new JSONObject(content); 
-	        JSONArray favorite_foods = o.getJSONArray("values");
-	        for (int i = 0; i < favorite_foods.length(); i++) {
-	            String food = (String) favorite_foods.getJSONObject(i).get("value").toString();
-	            System.out.println(food);
-	        }
-	        System.out.println((String)(favorite_foods.toString()));
-	        //JSONArray dg = favorite_foods.;
-	        //System.out.println((String)(favorite_foods1.toString()));
-    	}
-    	catch(IOException e) {  		
-    	}
-    	catch(JSONException e) {
-    	}*/
-    	
+  	
     	try {
 	    	URI uri = new URI("http://api.gios.gov.pl/pjp-api/rest/data/getData/92");
 	    	JSONTokener tokener = new JSONTokener(uri.toURL().openStream());

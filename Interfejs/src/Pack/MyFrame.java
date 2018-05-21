@@ -1,0 +1,92 @@
+package Pack;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class MyFrame extends JFrame implements ActionListener {
+    public MyFrame() {	
+    	super("login");
+    	
+    	setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(250, 150);
+		setLocation(200, 100);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+		JLabel name = new JLabel("Name:");
+		JLabel password = new JLabel("Password:");
+		JTextField nameField = new JTextField();
+		nameField.setName("name");
+		JPasswordField passField = new JPasswordField();
+		passField.setName("pass");
+		JButton loginButton = new JButton("Log");
+		loginButton.addActionListener(this);
+				
+		panel.add(name);
+		panel.add(nameField);
+		panel.add(password);
+		panel.add(passField);
+		panel.add(loginButton);
+		
+		this.add(panel);		
+    }
+    
+    public static List<Component> getAllComponents(final Container c) {
+        Component[] comps = c.getComponents();
+        List<Component> compList = new ArrayList<Component>();
+        for (Component comp : comps) {
+            compList.add(comp);
+            if (comp instanceof Container) {
+                compList.addAll(getAllComponents((Container) comp));
+            }
+        }
+        return compList;
+      }
+    
+    public Component getComponent(String name, List<Component> list) {
+        for (Component i : list) {
+        	if(i.getName() == name)
+        		return i;
+        }
+        	return null;
+    }
+    
+    public void actionPerformed(ActionEvent e) {  	
+    	List<Component> components = new ArrayList<Component>();
+    	components = getAllComponents(this.getContentPane());
+    	
+    	System.out.println(((JTextField)getComponent("name", components)).getText());
+    	System.out.println(((JPasswordField)getComponent("pass", components)).getText());
+    	
+    	new Frame();
+    	this.dispose();
+    	
+    }
+}

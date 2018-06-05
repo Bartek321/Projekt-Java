@@ -1,0 +1,348 @@
+package Pack;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.CheckboxGroup;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Frame extends JFrame implements ActionListener {
+	
+	JCheckBox[][] cb;
+	JTextField[][] ct;
+	ArrayList<ArrayList> listC;
+	ArrayList<ArrayList> listD;
+	ArrayList<Integer> listA;
+	JPanel cards;
+	
+    public Frame() {	
+    	super("Program");
+    	
+    	setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800, 600);
+		setLocation(200, 100);
+		
+		this.getContentPane().setLayout(new BorderLayout());
+		
+		JPanel sidePanel = new JPanel();
+		JPanel lowSidePanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setMaximumSize(new Dimension(300, 40));
+		//buttonPanel.setBackground(new Color(222,222,222));
+		JPanel checkPanel = new JPanel();
+		checkPanel.setMaximumSize(new Dimension(300, 80));
+		checkPanel.setLayout(new GridLayout(3,2));
+		JPanel comboPanel = new JPanel();
+		comboPanel.setLayout(new GridLayout(0, 1));
+		comboPanel.setMaximumSize(new Dimension(300, 44));
+		JPanel fieldPanel = new JPanel();
+		fieldPanel.setMaximumSize(new Dimension(300, 110));
+		JPanel fieldPanel1 = new JPanel();
+		
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(222,222,222));
+		panel.setPreferredSize(new Dimension(300, 500));
+		JPanel panel1 = new JPanel();
+		panel1.setBackground(new Color(211,211,211));
+		
+		Downloader dl = new Downloader();
+		listA = new ArrayList();
+		listA = dl.getStationsIds();
+		//ArrayList<Integer> listA = new ArrayList();
+
+		listC = new ArrayList();
+		listD = new ArrayList();
+		for(int i = 0; i < listA.size(); i++) {
+			listC.add(dl.getSensorsParams(listA.get(i)));
+			listD.add(dl.getSensorsIds(listA.get(i)));
+		}
+		//ArrayList<String> listA = new ArrayList();
+		System.out.println(listA.size());
+		Object[] stringsA = listA.toArray();
+		
+		JComboBox list = new JComboBox(stringsA);
+		list.setName("list");
+		list.setPreferredSize(new Dimension(200, 30));
+		String[] strings1 = { "Przekroczenie góra", "Przekroczenie dół", "Wzrost", "Spadek" };
+		JComboBox list1 = new JComboBox(strings1);
+		list1.setName("list1");
+		list1.setPreferredSize(new Dimension(200, 30));
+		
+		
+		
+		
+		
+		
+		ArrayList<String> listB = new ArrayList<>();
+		/*listB.add("PM2.5");
+		listB.add("a");
+		listB.add("b");
+		listB.add("c");
+		listB.add("O3");
+		listB.add("PM10");
+		listB.add("PM24");
+		listB.add("PM55");*/
+		
+		cb = new JCheckBox[7][6];
+		/*for(int i = 0; i < listB.size(); i++) {
+			cb[i] = new JCheckBox(listB.get(i));
+			checkPanel.add(cb[i]);
+		}*/
+		
+		ct = new JTextField[7][6];
+		for(int i = 0; i < listB.size(); i++) {
+			//ct[i] = new JTextField();
+			//ct[i].setName(listB.get(i));
+			//ct[i].setPreferredSize(new Dimension(70, 20));
+			//fieldPanel.add(new JLabel(listB.get(i)));
+			//fieldPanel.add(ct[i]);
+		}
+		GridLayout g = new GridLayout(0, 4);
+		g.setHgap(5);
+		
+		fieldPanel.setLayout(g);
+		JPanel XPanel = new JPanel();
+		//XPanel.add(fieldPanel);
+		//fieldPanel.setMaximumSize(new Dimension(300, listB.size()*15));
+		//XPanel.setBackground(new Color(1,222,222));
+		XPanel.setMaximumSize(new Dimension(300,100));
+		
+		
+		list.addActionListener(this);
+		
+		
+		
+		cards = new JPanel(new CardLayout());
+		
+		
+		
+		//p.add(checkPanel);
+		//p.add(XPanel);
+		
+		
+		for(int i = 0; i < listA.size(); i++) {
+			JPanel ck = new JPanel();
+			JPanel fieldPane = new JPanel();
+			JPanel sidePane = new JPanel();
+			sidePane.setLayout(new GridLayout(0, 2));
+			sidePane.add(new JLabel("Typ:"));
+			sidePane.add(new JLabel("Wzrost"));
+			ck.setMaximumSize(new Dimension(300, 80));
+			ck.setMinimumSize(new Dimension(300, 80));
+			fieldPane.setMinimumSize(new Dimension(300, 80));
+			ck.setLayout(new GridLayout(3,2));
+			for(int j = 0; j < listC.get(i).size(); j++) {
+				cb[i][j] = new JCheckBox(listC.get(i).get(j).toString());
+				cb[i][j].setName(listC.get(i).get(j).toString() + listA.get(i).toString() + "cb");
+				ck.add(cb[i][j]);
+				
+				ct[i][j] = new JTextField();
+				ct[i][j].setName(listC.get(i).get(j).toString() + listA.get(i).toString());
+				System.out.println(listC.get(i).get(j).toString() + " " + listA.get(i).toString());
+				ct[i][j].setPreferredSize(new Dimension(70, 20));
+				fieldPane.add(new JLabel(listC.get(i).get(j).toString()));
+				fieldPane.add(ct[i][j]);
+				sidePane.add(new JLabel(listC.get(i).get(j).toString()));
+				sidePane.add(new JLabel("100"));
+				
+
+				System.out.println(j);
+			}
+			JPanel p = new JPanel();
+			
+			
+			cards.add(p, listA.get(i).toString());
+			
+			JPanel f = new JPanel();
+			fieldPanel.setMaximumSize(new Dimension(300, 110));
+			
+			GridLayout gg = new GridLayout(0, 4);
+			g.setHgap(5);
+			
+			fieldPane.setLayout(gg);
+			JPanel XPane = new JPanel();
+			f.add(fieldPane);
+			f.setPreferredSize(new Dimension(300, 70));
+			XPane.add(f);
+			fieldPane.setMaximumSize(new Dimension(300, listB.size()*15));
+			XPane.setBackground(new Color(1,222,222));
+			XPane.setMaximumSize(new Dimension(300,100));
+			XPane.setMinimumSize(new Dimension(300,100));
+			
+			p.add(ck);
+			p.add(XPane);
+			p.add(sidePane);
+			cards.add(p, listA.get(i).toString());
+		}
+		
+		
+		//cards.add(checkPanel, "a");
+		//cards.add(fieldPanel, "b");
+		
+
+		/*JCheckBox check = new JCheckBox("PM10");
+		check.setSelected(true);
+		check.setName("check");
+		JCheckBox check1 = new JCheckBox("PM2.5");
+		check1.setSelected(false);
+		check1.setName("check1");
+		
+		cb = new JCheckBox[8];
+		cb[0] = check;
+		cb[1] = check1;*/
+		
+		/*JLabel label = new JLabel("Wartość:");
+		JTextField field = new JTextField();
+		field.setName("PM10");
+		field.setPreferredSize(new Dimension(120, 20));
+		
+		JLabel label1 = new JLabel("Wartość1:");
+		JTextField field1 = new JTextField();
+		field1.setName("PM2.5");
+		field1.setPreferredSize(new Dimension(120, 20));*/
+		
+		JButton button = new JButton("Dodaj");
+		button.addActionListener(this);	
+		
+		JButton button1 = new JButton("Reset");
+		button1.addActionListener(this);		
+		
+		comboPanel.add(list);
+		comboPanel.add(list1);
+		//checkPanel.add(check);
+		//checkPanel.add(check1);
+		/*fieldPanel.add(label);
+		fieldPanel.add(field);
+		fieldPanel1.add(label1);
+		fieldPanel1.add(field1);*/
+		buttonPanel.add(button);
+		buttonPanel.add(button1);
+		
+		panel.add(comboPanel);
+		//panel.add(checkPanel);
+		//panel.add(XPanel);
+		//panel.add(fieldPanel1);
+		panel.add(cards);
+		panel.add(buttonPanel);
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+		sidePanel.add(panel);
+		sidePanel.add(lowSidePanel);
+		
+		this.getContentPane().add(sidePanel, BorderLayout.LINE_END);
+		this.getContentPane().add(panel1, BorderLayout.CENTER);
+		
+		
+		
+		
+		
+		
+    }
+    
+    public static List<Component> getAllComponents(final Container c) {
+        Component[] comps = c.getComponents();
+        List<Component> compList = new ArrayList<Component>();
+        for (Component comp : comps) {
+            compList.add(comp);
+            if (comp instanceof Container) {
+                compList.addAll(getAllComponents((Container) comp));
+            }
+        }
+        return compList;
+      }
+    
+    public Component getComponent(String name, List<Component> list) {
+        for (Component i : list) {
+        	if(i.getName() != null) {
+	        	if(i.getName().equals(name))
+	        		return i;
+        	}
+        }
+        	return null;
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+    	List<Component> components = new ArrayList<Component>();
+    	components = getAllComponents(this.getContentPane());
+    	//System.out.println((JTextField)getComponent("PM10402", components) + "to");
+    	//System.out.println(((JTextField) getComponent("PM10402", components)).getText() + "to1");
+    	Object selected = ((JComboBox) getComponent("list", components)).getSelectedItem();
+    	//System.out.println(selected.toString() + "to2");
+    	if(e.getActionCommand() == "Dodaj") {	
+	    	
+	    	Map<String, String> map = new TreeMap<>();
+	
+	    	JSONObject Jobject = new JSONObject();
+	    	try {
+	    		Jobject.put("station", (((JComboBox)getComponent("list", components)).getSelectedItem()));
+	    		Jobject.put("type", (((JComboBox)getComponent("list1", components)).getSelectedItem()));
+	    		
+	    		Integer x = new Integer(0);
+	    		for(int i = 0; i < listA.size(); i++) {
+	    			if(listA.get(i).toString().equals( ((JComboBox) getComponent("list", components)).getSelectedItem().toString()) )
+						x = i;
+	    			System.out.println(x);
+	    			System.out.println(listA.get(i).toString());
+	    			System.out.println(((JComboBox) getComponent("list", components)).getSelectedItem().toString());
+	    		}
+	    		for(int i = 0; i < listC.get(x).size(); i++) {
+	        		if(((JCheckBox) getComponent( listC.get(x).get(i)  +  ((JComboBox) getComponent("list", components)).getSelectedItem().toString() + "cb"   , components)).isSelected())
+	        			//System.out.println((((JTextField)getComponent(cb[i].getText(), components)).getText()));
+	        			map.put(((JCheckBox)getComponent(  listC.get(x).get(i)  +  ((JComboBox) getComponent("list", components)).getSelectedItem().toString() + "cb"   , components)).getText(), ((JTextField) getComponent(listC.get(x).get(i)  +  ((JComboBox) getComponent("list", components)).getSelectedItem().toString(), components)).getText());
+	        	}
+	        	Jobject.put("values", map);      	
+	    	}
+	    	catch (JSONException E) {
+	    		
+	    	}
+	    	System.out.println(Jobject.toString());
+    	} else if (e.getActionCommand() == "Reset") {
+    		JSONObject Jobject = new JSONObject();
+	    	try {
+	    		Jobject.put("info", "reset");
+	    	}
+	    	catch (JSONException E) {
+	    		
+	    	}
+	    	//System.out.println(Jobject.toString());
+    	} 
+    	System.out.println(selected.toString());
+    	for(int i = 0; i < listC.size(); i++) {
+    		//System.out.println(listC.get(i));
+	    	if (selected.toString().equals(listD.get(i).toString())) {
+	    		//System.out.println(listC.get(i) + "fsdfsdfsdf");
+	    	}
+    	}
+    	CardLayout cardLayout = (CardLayout) cards.getLayout();
+    	cardLayout.show(cards, (((JComboBox)getComponent("list", components)).getSelectedItem()).toString());
+    }
+}

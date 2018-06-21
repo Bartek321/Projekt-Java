@@ -25,6 +25,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,8 +90,35 @@ public class MyFrame extends JFrame implements ActionListener {
     	System.out.println(((JTextField)Util.getComponent("name", components)).getText());
     	System.out.println(((JPasswordField)Util.getComponent("pass", components)).getText());
     	if(e.getActionCommand() == "Loguj") {
-	    	new Frame();
-	    	this.dispose();
+    	 	String url = "jdbc:mysql://mysql.agh.edu.pl:3306/mors2?useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    		String username = "mors2";
+    		String password = "haslojava";
+    		try (Connection connection = DriverManager.getConnection(url, username, password) )
+			{
+			      String query = "SELECT * FROM Users WHERE nick='"+ ((JTextField) Util.getComponent("name", components)).getText()+"'";
+			      PreparedStatement preparedStmt = connection.prepareStatement(query);
+			      ResultSet rs = preparedStmt.executeQuery(query);
+			      if(rs.isBeforeFirst())
+			      {
+			    	  rs.next();
+			      String haslo =rs.getString("haslo");
+			      String haslologin =((JTextField) Util.getComponent("pass", components)).getText();
+			      	if( haslo.equals( haslologin) )			
+			      	{
+			      		 //System.out.format("%s, %s, \n",haslologin,haslo ); 
+				connection.close();	
+		    	this.dispose();
+
+			    	new Frame();
+			      	}
+			      }
+					connection.close();	
+					System.out.println("złe logowanie");
+					
+			} catch (SQLException e1) {
+		    throw new IllegalStateException("Cannot connect the database!", e1);
+			}
+    		
     	} else if (e.getActionCommand() == "Rejestruj") {
 			new RegisterFrame();
 		}

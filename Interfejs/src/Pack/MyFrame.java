@@ -7,6 +7,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MyFrame extends JFrame implements ActionListener {
+	List<Component> components;
     public MyFrame() {	
     	super("login");
     	
@@ -37,56 +39,57 @@ public class MyFrame extends JFrame implements ActionListener {
 		setSize(250, 150);
 		setLocation(200, 100);
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		JPanel mainPanel = new JPanel();
+		JPanel labelPanel = new JPanel();
+		JPanel fieldPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
+		
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+		
+		fieldPanel.setLayout(new GridLayout(0,2));
 		
 		JLabel name = new JLabel("Name:");
 		JLabel password = new JLabel("Password:");
+		JLabel label = new JLabel("Logowanie");
+		
 		JTextField nameField = new JTextField();
 		nameField.setName("name");
 		JPasswordField passField = new JPasswordField();
 		passField.setName("pass");
-		JButton loginButton = new JButton("Log");
-		loginButton.addActionListener(this);
-				
-		panel.add(name);
-		panel.add(nameField);
-		panel.add(password);
-		panel.add(passField);
-		panel.add(loginButton);
 		
-		this.add(panel);		
-    }
-    
-    public static List<Component> getAllComponents(final Container c) {
-        Component[] comps = c.getComponents();
-        List<Component> compList = new ArrayList<Component>();
-        for (Component comp : comps) {
-            compList.add(comp);
-            if (comp instanceof Container) {
-                compList.addAll(getAllComponents((Container) comp));
-            }
-        }
-        return compList;
-      }
-    
-    public Component getComponent(String name, List<Component> list) {
-        for (Component i : list) {
-        	if(i.getName() == name)
-        		return i;
-        }
-        	return null;
+		JButton loginButton = new JButton("Loguj");
+		loginButton.addActionListener(this);
+		JButton registerButton = new JButton("Rejestruj");
+		registerButton.addActionListener(this);
+				
+		labelPanel.add(label);
+		
+		fieldPanel.add(name);
+		fieldPanel.add(nameField);
+		fieldPanel.add(password);
+		fieldPanel.add(passField);
+		
+		buttonPanel.add(loginButton);
+		buttonPanel.add(registerButton);
+		
+		mainPanel.add(labelPanel);
+		mainPanel.add(fieldPanel);
+		mainPanel.add(buttonPanel);
+		
+		this.add(mainPanel);
+		components = Util.getAllComponents(this.getContentPane());
     }
     
     public void actionPerformed(ActionEvent e) {  	
-    	List<Component> components = new ArrayList<Component>();
-    	components = getAllComponents(this.getContentPane());
     	
-    	System.out.println(((JTextField)getComponent("name", components)).getText());
-    	System.out.println(((JPasswordField)getComponent("pass", components)).getText());
-    	
-    	new Frame();
-    	this.dispose();
+    	System.out.println(((JTextField)Util.getComponent("name", components)).getText());
+    	System.out.println(((JPasswordField)Util.getComponent("pass", components)).getText());
+    	if(e.getActionCommand() == "Loguj") {
+	    	new Frame();
+	    	this.dispose();
+    	} else if (e.getActionCommand() == "Rejestruj") {
+			new RegisterFrame();
+		}
     	
     }
 }

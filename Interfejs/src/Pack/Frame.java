@@ -186,7 +186,9 @@ public class Frame extends JFrame implements ActionListener {
 
 		Chart chart = new Chart();
         ChartPanel chartPanel1 = chart.createChart(new Color(255, 0, 0));
+        chartPanel1.setName("paramChart");
         ChartPanel chartPanel11 = chart.createChart(new Color(0, 0, 255));
+        chartPanel11.setName("weatherChart");
              
         upPanel.setPreferredSize(new Dimension(2000, 34));
         //upPanel.setBackground(new Color(255,0,0));
@@ -353,9 +355,13 @@ public class Frame extends JFrame implements ActionListener {
 	    		
 	    	}
     	} else if (e.getActionCommand() == "Wyświetl") { 
-    		
+    		JFreeChart chart = ((ChartPanel) Util.getComponent("paramChart", components)).getChart();
+    		CategoryPlot plot = chart.getCategoryPlot();
+    		plot.setDataset(Chart.createDataset(((JComboBox)Util.getComponent("idList1", components)).getSelectedItem().toString()));
     	} else if (e.getActionCommand() == "Wyświetl ") { 
-  
+    		JFreeChart chart = ((ChartPanel) Util.getComponent("weatherChart", components)).getChart();
+    		CategoryPlot plot = chart.getCategoryPlot(); 		
+    		plot.setDataset(Chart.createDataset(((JComboBox)Util.getComponent("type", components)).getSelectedItem().toString()));
     	} else if (((Component) e.getSource()).getName().equals("month")) {
     		YearMonth yearMonthObject = YearMonth.of(Integer.parseInt(((JComboBox)Util.getComponent("year", components)).getSelectedItem().toString()), ((JComboBox)Util.getComponent("month", components)).getSelectedIndex() + 1);
         	int daysInMonth = yearMonthObject.lengthOfMonth();

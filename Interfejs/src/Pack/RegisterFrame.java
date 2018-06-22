@@ -126,31 +126,22 @@ public class RegisterFrame extends JFrame  implements ActionListener {
     		((JLabel) Util.getComponent("info", components)).setText("Nazwa jest za kr�tka");
     	else if(((JTextField) Util.getComponent("name", components)).getText().length() > 15)
     		((JLabel) Util.getComponent("info", components)).setText("Nazwa jest za d�uga");
-    	else
-    		
-    	{
-			try (Connection connection = DriverManager.getConnection(url, username, password) )
-			{
-			      String query = "Insert into Users (mail,haslo, nick)"+" VALUES (?,?,?)";
-			      PreparedStatement preparedStmt = connection.prepareStatement(query);
-				    preparedStmt.setString(1, ((JTextField) Util.getComponent("mail", components)).getText() );
-				    preparedStmt.setString(2, ((JTextField) Util.getComponent("pass", components)).getText() );
-				    preparedStmt.setString(3, ((JTextField) Util.getComponent("name", components)).getText() );
-
-				    preparedStmt.execute();
-				
+    	else {
+			try (Connection connection = DriverManager.getConnection(url, username, password)) {
+			    String query = "Insert into Users (mail,haslo, nick)"+" VALUES (?,?,?)";
+			    PreparedStatement preparedStmt = connection.prepareStatement(query);
+				preparedStmt.setString(1, ((JTextField) Util.getComponent("mail", components)).getText() );
+				preparedStmt.setString(2, ((JTextField) Util.getComponent("pass", components)).getText() );
+				preparedStmt.setString(3, ((JTextField) Util.getComponent("name", components)).getText() );
+				preparedStmt.execute();
 				
 				connection.close();	
 			} catch (SQLException e1) {
-		    throw new IllegalStateException("Cannot connect the database!", e1);
+				throw new IllegalStateException("Cannot connect the database!", e1);
 			}
-
-    		
-    				((JLabel) Util.getComponent("info", components)).setText("Zarejestrowano");
-  
+			((JLabel) Util.getComponent("info", components)).setText("Zarejestrowano");
+ 
     	}
-    	}
+    }
 
 }
-
-

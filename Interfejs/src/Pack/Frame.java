@@ -113,7 +113,7 @@ public class Frame extends JFrame implements ActionListener {
 		list.setName("list");
 		list.setPreferredSize(new Dimension(200, 30));
 		
-		String[] strings1 = { "Przekroczenie gÛra", "Przekroczenie dÛ≥", "Wzrost", "Spadek" };
+		String[] strings1 = { "Przekroczenie g√≥ra", "Przekroczenie d√≥≈Ç", "Wzrost", "Spadek" };
 		JComboBox list1 = new JComboBox(strings1);
 		list1.setName("list1");
 		list1.setPreferredSize(new Dimension(200, 30));
@@ -214,7 +214,7 @@ public class Frame extends JFrame implements ActionListener {
 			listb1.addItem(i);
 		}
 		
-		String[] s = {"StyczeÒ", "Luty", "Marzec", "KwiecieÒ", "Maj", "Czerwiec", "Lipiec", "SierpieÒ", "WrzesieÒ", "Paüdziernik", "Listopad", "GrudzieÒ"};
+		String[] s = {"Stycze≈Ñ", "Luty", "Marzec", "Kwiecie≈Ñ", "Maj", "Czerwiec", "Lipiec", "Sierpie≈Ñ", "Wrzesie≈Ñ", "Pa≈∫dziernik", "Listopad", "Grudzie≈Ñ"};
 		JComboBox listb2 = new JComboBox(s);
 		listb2.setName("month");
 		listb2.setPreferredSize(new Dimension(100, 24));
@@ -230,7 +230,7 @@ public class Frame extends JFrame implements ActionListener {
 			System.out.println(year + i);
 		}
 		
-		JButton buttonD = new JButton("Wyúwietl");
+		JButton buttonD = new JButton("Wy≈õwietl");
 		buttonD.addActionListener(this);	
 		
 		upPanel.add(idList);
@@ -240,7 +240,7 @@ public class Frame extends JFrame implements ActionListener {
 		upPanel.add(listb3);
 		upPanel.add(buttonD);
 		
-		String[] ss = {"Temperatura", "WilgotnoúÊ", "Si≥a wiatru", "Ciúnienie"};
+		String[] ss = {"Temperatura", "Wilgotno≈õƒá", "Si≈Ça wiatru", "Ci≈õnienie"};
 		JComboBox paramList1 = new JComboBox(ss);
 		paramList1.setName("type");
 		paramList1.setPreferredSize(new Dimension(100, 24));
@@ -267,7 +267,7 @@ public class Frame extends JFrame implements ActionListener {
 			System.out.println(year + i);
 		}
 		
-		JButton buttonE = new JButton("Wyúwietl ");
+		JButton buttonE = new JButton("Wy≈õwietl ");
 		buttonE.addActionListener(this);
 		
 		downPanel.add(paramList1);
@@ -352,9 +352,9 @@ public class Frame extends JFrame implements ActionListener {
 	    	catch (JSONException E) {
 	    		
 	    	}
-    	} else if (e.getActionCommand() == "Wyúwietl") { 
+    	} else if (e.getActionCommand() == "Wy≈õwietl") { 
     		
-    	} else if (e.getActionCommand() == "Wyúwietl ") { 
+    	} else if (e.getActionCommand() == "Wy≈õwietl ") { 
   
     	} else if (((Component) e.getSource()).getName().equals("month")) {
     		YearMonth yearMonthObject = YearMonth.of(Integer.parseInt(((JComboBox)Util.getComponent("year", components)).getSelectedItem().toString()), ((JComboBox)Util.getComponent("month", components)).getSelectedIndex() + 1);

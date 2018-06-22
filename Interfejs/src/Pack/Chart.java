@@ -21,7 +21,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class Chart {
 	
 	 public ChartPanel createChart(Color color) {
-		 JFreeChart lineChart = ChartFactory.createLineChart("22.05.2018", "czas","wartoœæ", createDataset(), PlotOrientation.VERTICAL, true,true,false);
+		 JFreeChart lineChart = ChartFactory.createLineChart("22.05.2018", "czas","wartoÅ›Ä‡", createDataset(""), PlotOrientation.VERTICAL, true,true,false);
 	     Font font = new Font("Dialog", Font.BOLD, 8); 
 	     CategoryPlot plot = lineChart.getCategoryPlot(); 
 	     ValueAxis valueAxis = plot.getRangeAxis();
@@ -42,7 +42,7 @@ public class Chart {
 	     return chartPanel;	             
 	 }
 	
-	 public DefaultCategoryDataset createDataset( ) {
+	 public static DefaultCategoryDataset createDataset(String param) {
 	    	ArrayList<Double> list = new ArrayList<>();
 	    	Random generator = new Random();
 
@@ -59,24 +59,23 @@ public class Chart {
 	        
 	        for(int i = 0; i < 24; i++) {
 	        	if(list.get(i) == -1.0)
-	        		dataset.addValue( null , "PM 10" , i + ":" + "00" );
+	        		dataset.addValue( null , param , i + ":" + "00" );
 	        	else
-	        		dataset.addValue( list.get(i) , "PM 10" , i + ":" + "00" );
+	        		dataset.addValue( list.get(i) , param , i + ":" + "00" );
 	        }
 	        return dataset;
 	     }
 	 
-	 public DefaultCategoryDataset createDataset2(ArrayList<Double> data ) {
+	 public DefaultCategoryDataset createDataset2(ArrayList<Double> data, String param) {
 	    	ArrayList<Double> list = new ArrayList<>();
-	    	Random generator = new Random();
 
 	        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
 	        
 	        for(int i = 0; i < data.size(); i++) {
 	        	if(list.get(i) == -1.0)
-	        		dataset.addValue( null , "" , i + ":" + "00" );
+	        		dataset.addValue( null , param , i + ":" + "00" );
 	        	else
-	        		dataset.addValue( list.get(i) , "" , i + ":" + "00" );
+	        		dataset.addValue( list.get(i) , param , i + ":" + "00" );
 	        }
 	        return dataset;
 	     }

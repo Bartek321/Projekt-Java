@@ -87,35 +87,20 @@ public class MyFrame extends JFrame implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {  	
     	
-    	System.out.println(((JTextField)Util.getComponent("name", components)).getText());
-    	System.out.println(((JPasswordField)Util.getComponent("pass", components)).getText());
     	if(e.getActionCommand() == "Loguj") {
-    	 	String url = "jdbc:mysql://mysql.agh.edu.pl:3306/mors2?useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    		String username = "mors2";
-    		String password = "haslojava";
-    		try (Connection connection = DriverManager.getConnection(url, username, password) ) {
-			    String query = "SELECT * FROM Users WHERE nick='"+ ((JTextField) Util.getComponent("name", components)).getText()+"'";
-			    PreparedStatement preparedStmt = connection.prepareStatement(query);
-			    ResultSet rs = preparedStmt.executeQuery(query);
-			    if(rs.isBeforeFirst()) {
-			    	rs.next();
-			        String haslo = rs.getString("haslo");
-			        String haslologin =((JTextField) Util.getComponent("pass", components)).getText();
-			      	if(haslo.equals(haslologin)) {
-			      		 //System.out.format("%s, %s, \n",haslologin,haslo ); 
-						connection.close();	
-						new Frame();
-				    	this.dispose();
-			      	}
-			    }
-					connection.close();	
-					System.out.println("z≥e logowanie");
-					
-			} catch (SQLException e1) {
-				throw new IllegalStateException("Cannot connect the database!", e1);
-			}
+    	 	ConnectionDataBase connection= new ConnectionDataBase();
+    		if(connection.login(((JTextField) Util.getComponent("name", components)).getText(), ((JTextField) Util.getComponent("pass", components)).getText()))
+    		{  
+				connection.disconect();	
+		    	this.dispose();
+			    new Frame();
+    		}
+    		else
+				System.out.println("z≈Çe logowanie");
     		
-    	} else if (e.getActionCommand() == "Rejestruj") {
+		}
+			      
+    		else if (e.getActionCommand() == "Rejestruj") {
 			new RegisterFrame();
 		}
     	

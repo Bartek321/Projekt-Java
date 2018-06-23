@@ -56,10 +56,11 @@ public class Frame extends JFrame implements ActionListener {
 	List<String> stationsNamesList;
 	JPanel cards;
 	HashMap<String, Integer> map;
+	String Mail;
 	
-    public Frame() {	
+    public Frame(String mail) {	
     	super("Program");
-    	
+    	Mail=mail;
     	setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1000, 720);

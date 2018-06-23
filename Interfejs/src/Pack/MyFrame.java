@@ -91,9 +91,10 @@ public class MyFrame extends JFrame implements ActionListener {
     	 	ConnectionDataBase connection= new ConnectionDataBase();
     		if(connection.login(((JTextField) Util.getComponent("name", components)).getText(), ((JTextField) Util.getComponent("pass", components)).getText()))
     		{  
+    			String mail=connection.getMail(((JTextField) Util.getComponent("name", components)).getText());
 				connection.disconect();	
 		    	this.dispose();
-			    new Frame();
+			    new Frame(mail);
     		}
     		else
 				System.out.println("złe logowanie");

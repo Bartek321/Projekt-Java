@@ -41,6 +41,7 @@ public class Main {
             	TypyPowiadomien =conn.getTypes();
             	IdSensorów =  conn.getIdSensors();
             	System.out.println("Próba testowa2");
+            	conn.disconect();
 
               new MyFrame();
             }
